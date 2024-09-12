@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mi-aplicacion-web
+spec:
+  replicas: 1  # Número de instancias de tu página web
+  selector:
+    matchLabels:
+      app: mi-aplicacion-web
+  template:
+    metadata:
+      labels:
+        app: mi-aplicacion-web
+    spec:
+      containers:
+      - name: apache
+        image: httpd:latest  # Usa la imagen oficial de Apache HTTP Server
+        ports:
+        - containerPort: 80  # Puerto donde Apache servirá la página
+        volumeMounts:
+        - name: web-content
+          mountPath: /usr/local/apache2/htdocs  # Directorio donde Apache sirve los archivos HTML
+      volumes:
+      - name: web-content
+        gitRepo:
+          repository: https://github.com/tu-usuario/exp2_s6  # Reemplaza con tu nombre de usuario de GitHub
+          revision: main  # Branch que contiene el código HTML (puedes cambiarlo si es necesario)
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mi-aplicacion-web-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: mi-aplicacion-web
+  ports:
+  - port: 80
+    targetPort: 80  # Puerto en el que se expone el contenedor
