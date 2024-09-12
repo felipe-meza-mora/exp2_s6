@@ -23,7 +23,7 @@ spec:
       volumes:
       - name: web-content
         gitRepo:
-          repository: https://github.com/tu-usuario/exp2_s6  # Reemplaza con tu nombre de usuario de GitHub
+          repository: https://github.com/felipe-meza-mora/exp2_s6.git # Reemplaza con tu nombre de usuario de GitHub
           revision: main  # Branch que contiene el código HTML (puedes cambiarlo si es necesario)
 ---
 apiVersion: v1
